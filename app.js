@@ -31,6 +31,45 @@ const landmarks = {
   }
 };
 
+const landmarkNotes = {
+  'big-ben': {
+    location: 'Westminster · North bank of the Thames', date: '1859 · The first chimes',
+    history: 'Big Ben is the name of the great bell inside Elizabeth Tower, although the nickname often embraces the whole clock tower. Beside the Palace of Westminster, this Victorian landmark has become one of London’s most recognisable silhouettes.',
+    look: 'Look for the tall clock faces, the intricate stonework and the slender spire above them. From across the river, the tower and the long façade of Parliament read almost like a single drawing against the sky.',
+    note: 'A little pause: take in the skyline from the South Bank.'
+  },
+  'tower-bridge': {
+    location: 'The Thames · Beside the Tower of London', date: '1894 · A new river crossing',
+    history: 'Tower Bridge was built to carry road traffic while allowing ships to reach the busy docks upstream. Its two central sections lift apart, combining practical Victorian engineering with an unmistakable pair of Gothic towers.',
+    look: 'Follow the blue steelwork between the stone towers, then notice the high walkways above the roadway. The historic engine rooms tell another part of the story: the machinery that once powered the bridge’s lifts.',
+    note: 'A little pause: watch the changing light on the water.'
+  },
+  'british-museum': {
+    location: 'Bloomsbury · Great Russell Street', date: '1759 · The museum opens',
+    history: 'Founded in 1753, the British Museum opened its doors in 1759. Its collections bring together objects from many cultures and periods, offering different ways to consider human history through the things people have made, used and treasured.',
+    look: 'The columned entrance gives way to a very different architectural scene inside. In the Great Court, a sweeping glass roof surrounds the historic Reading Room; this light-filled space opened in 2000.',
+    note: 'A little pause: choose one gallery and let curiosity set the pace.'
+  },
+  'buckingham-palace': {
+    location: 'Westminster · Facing The Mall', date: '1837 · Queen Victoria moves in',
+    history: 'Buckingham Palace became the official seat of the court when Queen Victoria came to the throne in 1837. Its history connects a private house with a royal palace, and its familiar balcony has become a stage for national occasions.',
+    look: 'Take in the broad, symmetrical façade, the ornamental gates and the Victoria Memorial in front of the palace. Their arrangement creates a formal composition, softened by the green spaces nearby.',
+    note: 'A little pause: wander towards the trees of St James’s Park.'
+  },
+  'london-eye': {
+    location: 'South Bank · Beside Westminster Bridge', date: '135 metres · Above the river',
+    history: 'The London Eye adds a modern circle to a skyline filled with towers and spires. Rising 135 metres above the South Bank, the observation wheel offers an elevated perspective on the river and the city arranged around it.',
+    look: 'Trace the fine spokes and the passenger capsules around the rim. From the riverside, its open structure frames fragments of London rather than hiding them, changing with every step along the bank.',
+    note: 'A little pause: sketch the wheel as one simple circle.'
+  },
+  'westminster-abbey': {
+    location: 'Westminster · Beside Parliament Square', date: '1066 · A coronation tradition begins',
+    history: 'Westminster Abbey has been Britain’s coronation church since 1066. Its history brings together royal ceremony, worship and remembrance, while its Gothic architecture gives those stories a setting of soaring stone and carefully shaped light.',
+    look: 'Notice the pointed arches and the rhythm of the stonework. Within the Abbey, memorials and monuments connect the building to generations of writers, scientists and other figures in Britain’s history.',
+    note: 'A little pause: follow the lines of an arch with your eyes.'
+  }
+};
+
 const buttons = [...document.querySelectorAll('[data-landmark]')];
 const story = document.querySelector('#story-content');
 const releaseButton = document.querySelector('#release-selection');
@@ -49,6 +88,45 @@ let pinned = null;
 let displayed = 'tower-bridge';
 let storyTimer;
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+const detail = document.querySelector('#landmark-detail');
+const detailFields = Object.fromEntries(['number', 'category', 'title', 'tagline', 'location', 'date', 'history', 'look', 'note'].map(key => [key, document.querySelector(`#detail-${key}`)]));
+
+for (const button of buttons) {
+  button.setAttribute('aria-haspopup', 'dialog');
+  button.setAttribute('aria-controls', 'landmark-detail');
+}
+
+function openDetail(id) {
+  const landmark = landmarks[id];
+  const notes = landmarkNotes[id];
+  if (!landmark || !notes) return;
+  pinned = id;
+  hovered = null;
+  focused = null;
+  render();
+  for (const [key, element] of Object.entries(detailFields)) {
+    element.textContent = key === 'number' ? `${landmark.number} / 06` : key === 'title' ? landmark.name : landmark[key] || notes[key];
+  }
+  const art = document.querySelector('#detail-art');
+  art.src = `./assets/illustrations/${id}.png`;
+  art.alt = `A coloured-pencil illustration of ${landmark.name}`;
+  if (!detail.open) detail.showModal();
+  document.body.classList.add('detail-is-open');
+  detail.scrollTop = 0;
+  status.textContent = `${landmark.name} story opened. Close the story to return to the map.`;
+}
+
+document.querySelector('#close-detail').addEventListener('click', () => detail.close());
+detail.addEventListener('close', () => {
+  document.body.classList.remove('detail-is-open');
+  releaseSelection(true);
+});
+detail.addEventListener('click', event => {
+  if (event.target !== detail) return;
+  const rect = detail.getBoundingClientRect();
+  if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) detail.close();
+});
+document.querySelector('#read-story').addEventListener('click', () => openDetail(displayed));
 
 function updateStory(id) {
   clearTimeout(storyTimer);
@@ -77,11 +155,11 @@ function render() {
   updateStory(active);
 }
 
-function releaseSelection() {
+function releaseSelection(preserveFocus = false) {
   pinned = null;
   hovered = null;
   focused = null;
-  if (buttons.includes(document.activeElement)) document.activeElement.blur();
+  if (!preserveFocus && buttons.includes(document.activeElement)) document.activeElement.blur();
   render();
   status.textContent = 'Selection released. Explore another landmark.';
 }
@@ -108,9 +186,7 @@ for (const [index, button] of buttons.entries()) {
     render();
   });
   button.addEventListener('click', () => {
-    pinned = pinned === id ? null : id;
-    render();
-    status.textContent = pinned ? `${landmarks[id].name} selected. Click again or press Escape to release.` : 'Selection released.';
+    openDetail(id);
   });
   button.addEventListener('keydown', event => {
     let next;
@@ -139,13 +215,62 @@ releaseButton.addEventListener('click', () => {
 });
 
 document.addEventListener('keydown', event => {
-  if (event.key === 'Escape') releaseSelection();
+  if (event.key === 'Escape' && !detail.open) releaseSelection();
+});
+
+const music = document.querySelector('#background-music');
+const musicButton = document.querySelector('#music-toggle');
+const musicLabel = document.querySelector('#music-label');
+const musicStatus = document.querySelector('#music-status');
+let musicRequested = false;
+let musicAttempt = 0;
+music.volume = 0.28;
+
+function renderMusic(playing, loading = false) {
+  musicButton.classList.toggle('is-playing', playing);
+  musicButton.classList.toggle('is-loading', loading);
+  musicButton.setAttribute('aria-pressed', String(playing));
+  musicButton.setAttribute('aria-label', playing || loading ? 'Pause background music' : 'Play background music');
+  musicLabel.textContent = loading ? 'Music · Loading' : playing ? 'Music · Pause' : 'Music · Play';
+}
+
+function pauseMusic() {
+  musicRequested = false;
+  musicAttempt++;
+  music.pause();
+  renderMusic(false);
+  musicStatus.textContent = 'Background music is paused.';
+}
+
+musicButton.addEventListener('click', async () => {
+  if (musicRequested) return pauseMusic();
+  musicRequested = true;
+  const attempt = ++musicAttempt;
+  renderMusic(false, true);
+  try {
+    if (music.error) music.load();
+    await music.play();
+    if (attempt !== musicAttempt) return;
+    renderMusic(true);
+    musicStatus.textContent = 'Playing Thatched Villagers by Kevin MacLeod. Choose Pause to stop.';
+  } catch (error) {
+    if (attempt !== musicAttempt) return;
+    musicRequested = false;
+    renderMusic(false);
+    musicStatus.textContent = 'Music could not start. Choose Play to try again.';
+  }
+});
+music.addEventListener('pause', () => { if (musicRequested) pauseMusic(); });
+music.addEventListener('error', () => {
+  pauseMusic();
+  musicStatus.textContent = 'Music is unavailable right now. Choose Play to try again.';
 });
 
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) {
     hovered = null;
     render();
+    pauseMusic();
   }
 });
 

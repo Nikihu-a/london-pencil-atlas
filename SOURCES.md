@@ -12,3 +12,14 @@ The descriptions in this independent atlas are short, original summaries. These 
 | Westminster Abbey | [Westminster Abbey — A history of coronations](https://www.westminster-abbey.org/history/coronations-at-the-abbey/a-history-of-coronations) | Coronation church since 1066 |
 
 Map positions and surrounding architecture are stylised artistic interpretations, rather than surveyed geography or walking directions. The six landmark illustrations and atmospheric backdrop were generated for this project; no third-party tourist photographs are embedded.
+
+## Additional landmark notes
+
+- [UK Parliament — Big Ben facts and figures](https://www.parliament.uk/about/living-heritage/building/palace/big-ben/facts-figures/) — clock tower and bell history.
+- [British Museum — Great Court](https://www.britishmuseum.org/collection/galleries/great-court) — Reading Room, glass roof and opening in 2000.
+
+The “Look a little closer” notes include original observations about the illustrations. The closing suggestions are editorial prompts, rather than visitor directions.
+
+## Music
+
+“Thatched Villagers” by Kevin MacLeod (incompetech.com), ISRC USUAN1100720. The author’s [official track page](https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100720&Search=Search) and [licensing page](https://incompetech.com/music/royalty-free/licenses/) were checked on 11 October 2026. Distributed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The original MP3 is bundled without edits. Complete credit: [assets/audio/ATTRIBUTION.md](./assets/audio/ATTRIBUTION.md).

@@ -10,8 +10,8 @@
   <meta property="og:type" content="website">
   <title>London — A City in Sketches</title>
   <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
-  <link rel="stylesheet" href="./styles.css">
-  <script src="./app.js" defer></script>
+  <link rel="stylesheet" href="./styles.css?v=20261011-notes1">
+  <script src="./app.js?v=20261011-notes1" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#landmarks">Skip to the landmarks</a>
@@ -20,6 +20,10 @@
       <a class="wordmark" href="#top" aria-label="London, back to the beginning">London</a>
       <span class="edition">A city in sketches</span>
       <p class="header-hint"><span class="hint-dot" aria-hidden="true"></span><span class="desktop-copy">Hover to explore</span><span class="touch-copy">Tap to explore</span></p>
+      <button class="music-toggle" id="music-toggle" type="button" aria-label="Play background music" aria-pressed="false" aria-describedby="music-status">
+        <span class="music-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span id="music-label">Music · Play</span>
+      </button>
     </header>
 
     <main class="atlas" id="top">
@@ -70,7 +74,8 @@
           <p class="story-tagline" id="story-tagline">Stone towers. Blue steel. A London icon.</p>
           <p class="story-description" id="story-description">Opened in 1894, this much-loved Thames crossing pairs Gothic towers with an ingenious lifting bridge. Its silhouette is part of the city’s story.</p>
         </div>
-        <div class="story-instructions" id="map-instructions"><span class="instruction-rule" aria-hidden="true"></span><p id="interaction-hint"><span class="desktop-copy">Hover to reveal. Click to linger.</span><span class="touch-copy">Tap a building. Let the city unfold.</span></p></div>
+        <button class="read-story" id="read-story" type="button" aria-haspopup="dialog" aria-controls="landmark-detail">Read the story <span aria-hidden="true">↗</span></button>
+        <div class="story-instructions" id="map-instructions"><span class="instruction-rule" aria-hidden="true"></span><p id="interaction-hint"><span class="desktop-copy">Hover for colour. Click for the story.</span><span class="touch-copy">Tap a building to open its story.</span></p></div>
         <button class="release-selection" id="release-selection" type="button" hidden>Release selection <span aria-hidden="true">↗</span></button>
       </aside>
       <p class="screen-reader-only" id="selection-status" role="status" aria-live="polite" aria-atomic="true"></p>
@@ -81,7 +86,25 @@
       <a class="source-link" href="https://github.com/Nikihu-a/london-pencil-atlas" target="_blank" rel="noopener noreferrer">Open source <span aria-hidden="true">↗</span></a>
       <span class="footer-note">Made for a little wandering.</span>
     </footer>
+    <p class="music-credit">Music: “Thatched Villagers” by <a href="https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100720&amp;Search=Search" target="_blank" rel="noopener noreferrer">Kevin MacLeod (incompetech.com)</a> · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a></p>
   </div>
+  <audio id="background-music" src="./assets/audio/thatched-villagers.mp3" preload="none" loop></audio>
+  <p class="screen-reader-only" id="music-status" role="status" aria-live="polite">Background music is paused. Choose Play to listen.</p>
+  <dialog class="landmark-detail" id="landmark-detail" aria-labelledby="detail-title" aria-describedby="detail-tagline">
+    <div class="detail-header"><span>Notes from London <span id="detail-number">01 / 06</span></span><button id="close-detail" class="detail-close" type="button" aria-label="Close landmark story" autofocus>Close <span aria-hidden="true">×</span></button></div>
+    <div class="detail-layout">
+      <figure class="detail-figure"><img id="detail-art" alt="" width="1024" height="1024"><figcaption>A city, drawn slowly.</figcaption></figure>
+      <article class="detail-copy">
+        <p class="detail-category" id="detail-category"></p>
+        <h2 id="detail-title"></h2>
+        <p class="detail-tagline" id="detail-tagline"></p>
+        <dl class="detail-facts"><div><dt>Find it in</dt><dd id="detail-location"></dd></div><div><dt>At a glance</dt><dd id="detail-date"></dd></div></dl>
+        <h3>The story</h3><p id="detail-history"></p>
+        <h3>Look a little closer</h3><p id="detail-look"></p>
+        <p class="detail-note" id="detail-note"></p>
+      </article>
+    </div>
+  </dialog>
   <noscript><p class="noscript-note">This illustrated atlas works best with JavaScript enabled. Its six landmarks are Big Ben, Tower Bridge, British Museum, Buckingham Palace, London Eye and Westminster Abbey.</p></noscript>
 </body>
 </html>

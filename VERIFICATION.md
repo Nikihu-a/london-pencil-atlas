@@ -1,24 +1,21 @@
 # Verification status
 
+Checked on 11 October 2026.
+
 ## Completed
 
-- JavaScript syntax check passed.
-- All HTML and CSS local asset references resolve to existing files.
-- The preview server serves `index.html` successfully.
-- All six landmarks are independent transparent illustrations; their RGBA transparency was inspected.
-- Interface text is English throughout.
-- The DOM event-logic checks passed for hover and leave, one active building, click/unpin, restoring a pinned selection after a temporary hover, quick-hover transition cancellation, touch selection, arrow-key navigation and Escape.
-- Fonts and their SIL Open Font License files are bundled locally.
-- Relative asset paths and `.nojekyll` are ready for GitHub Pages project hosting.
-- Real desktop browser inspection completed in Tabbit, including grayscale illustrations and the active colour/scale state.
-- Clicking all six landmark controls changed the selected state and introduction correctly in the browser.
-- Title spacing and the separation between Big Ben and Westminster Abbey were adjusted after visual inspection.
-- The public `Nikihu-a/london-pencil-atlas` repository was created successfully.
+- JavaScript syntax check passed. All local HTML and CSS asset references resolve.
+- Six independent transparent landmark illustrations, local fonts and their OFL licence files are bundled. Interface text is English.
+- In a real Tabbit browser, all six building clicks opened the corresponding illustrated story, with the correct title, image and original descriptions. Escape closed each story.
+- The desktop detail layout and the Big Ben illustration were inspected visually.
+- Browser device emulation at 390 px and 320 px was used to inspect the header, music button, title, map and story layout.
+- A landmark story was opened, scrolled and closed at the mobile viewport. The close button stays available while scrolling.
+- The music button started real browser audio playback and changed to Pause; pausing stopped playback and restored Play. Initial load was silent.
+- The recording is a local MP3, with loop enabled, preload disabled, a quiet default volume and a visible CC BY 4.0 credit.
+- The original map hover/selection event checks passed before the story-dialog extension; the current dialog and music changes were checked in the browser.
+- The public repository is https://github.com/Nikihu-a/london-pencil-atlas.
+- GitHub Pages is enabled for main, / (root). The initial live deployment was verified at https://nikihu-a.github.io/london-pencil-atlas/.
 
-The event checks execute the real `app.js` against a minimal DOM harness. They verify selection behaviour and asynchronous story updates; they do not establish actual browser layout, CSS rendering, pointer hit areas or mobile viewport behaviour.
+## Limits
 
-## Pending
-
-- Visual browser inspection at mobile sizes and real touch-device verification.
-- Source and illustration upload.
-- GitHub Pages configuration and a verified live `github.io` URL.
+Mobile inspection used browser emulation, not a physical phone. Audio playback state was verified in the browser; no subjective listening evaluation was recorded.
