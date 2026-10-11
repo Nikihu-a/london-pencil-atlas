@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f4ed">
+  <meta name="description" content="An illustrated pencil atlas of London. Explore six famous landmarks as graphite sketches gently come to life in colour.">
+  <meta property="og:title" content="London — A City in Sketches">
+  <meta property="og:description" content="Six landmarks. A city waiting to be coloured. An interactive, hand-drawn guide to London.">
+  <meta property="og:type" content="website">
+  <title>London — A City in Sketches</title>
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#landmarks">Skip to the landmarks</a>
+  <div class="atlas-page">
+    <header class="masthead">
+      <a class="wordmark" href="#top" aria-label="London, back to the beginning">London</a>
+      <span class="edition">A city in sketches</span>
+      <p class="header-hint"><span class="hint-dot" aria-hidden="true"></span><span class="desktop-copy">Hover to explore</span><span class="touch-copy">Tap to explore</span></p>
+    </header>
+
+    <main class="atlas" id="top">
+      <section class="introduction" aria-labelledby="page-title">
+        <h1 id="page-title"><em>London,</em><span>one landmark</span><span>at a time.</span></h1>
+        <p class="invitation">Six landmarks.<br class="small-break"> A city waiting to be coloured.</p>
+      </section>
+
+      <section class="map" id="landmarks" aria-label="An illustrated map of six London landmarks" aria-describedby="map-instructions">
+        <div class="map-canvas">
+          <img class="map-backdrop" src="./assets/illustrations/backdrop.png" width="1536" height="1024" alt="" fetchpriority="high" draggable="false">
+
+          <button class="landmark landmark--museum" type="button" data-landmark="british-museum" aria-label="Explore British Museum" aria-pressed="false">
+            <img class="landmark-art" src="./assets/illustrations/british-museum.png" width="1774" height="887" alt="" draggable="false">
+            <span class="map-label"><span class="map-number">03</span><span class="map-name">British Museum</span></span>
+          </button>
+          <button class="landmark landmark--palace" type="button" data-landmark="buckingham-palace" aria-label="Explore Buckingham Palace" aria-pressed="false">
+            <img class="landmark-art" src="./assets/illustrations/buckingham-palace.png" width="1774" height="887" alt="" draggable="false">
+            <span class="map-label"><span class="map-number">04</span><span class="map-name">Buckingham Palace</span></span>
+          </button>
+          <button class="landmark landmark--ben" type="button" data-landmark="big-ben" aria-label="Explore Big Ben" aria-pressed="false">
+            <img class="landmark-art" src="./assets/illustrations/big-ben.png" width="1024" height="1536" alt="" draggable="false">
+            <span class="map-label"><span class="map-number">01</span><span class="map-name">Big Ben</span></span>
+          </button>
+          <button class="landmark landmark--eye" type="button" data-landmark="london-eye" aria-label="Explore London Eye" aria-pressed="false">
+            <img class="landmark-art" src="./assets/illustrations/london-eye.png" width="1292" height="1218" alt="" draggable="false">
+            <span class="map-label"><span class="map-number">05</span><span class="map-name">London Eye</span></span>
+          </button>
+          <button class="landmark landmark--abbey" type="button" data-landmark="westminster-abbey" aria-label="Explore Westminster Abbey" aria-pressed="false">
+            <img class="landmark-art" src="./assets/illustrations/westminster-abbey.png" width="1536" height="1024" alt="" draggable="false">
+            <span class="map-label"><span class="map-number">06</span><span class="map-name">Westminster Abbey</span></span>
+          </button>
+          <button class="landmark landmark--bridge" type="button" data-landmark="tower-bridge" aria-label="Explore Tower Bridge" aria-pressed="false">
+            <img class="landmark-art" src="./assets/illustrations/tower-bridge.png" width="1774" height="887" alt="" draggable="false">
+            <span class="map-label"><span class="map-number">02</span><span class="map-name">Tower Bridge</span></span>
+          </button>
+
+          <div class="compass" aria-hidden="true"><span>N</span><svg viewBox="0 0 24 46" fill="none"><path d="M12 3 22 42 12 33 2 42Z" stroke="currentColor" stroke-width=".75"/><path d="M12 3V33L2 42Z" fill="currentColor"/></svg></div>
+        </div>
+        <p class="map-caption">Illustrated map · Not to scale</p>
+      </section>
+
+      <aside class="landmark-story" aria-label="Landmark introduction">
+        <div class="story-rule" aria-hidden="true"></div>
+        <div class="story-content" id="story-content">
+          <p class="story-kicker"><span class="story-number" id="story-number">02</span><span class="story-slash" aria-hidden="true">/</span><span id="story-category">The river icon</span></p>
+          <h2 id="story-title">Tower Bridge</h2>
+          <p class="story-tagline" id="story-tagline">Stone towers. Blue steel. A London icon.</p>
+          <p class="story-description" id="story-description">Opened in 1894, this much-loved Thames crossing pairs Gothic towers with an ingenious lifting bridge. Its silhouette is part of the city’s story.</p>
+        </div>
+        <div class="story-instructions" id="map-instructions"><span class="instruction-rule" aria-hidden="true"></span><p id="interaction-hint"><span class="desktop-copy">Hover to reveal. Click to linger.</span><span class="touch-copy">Tap a building. Let the city unfold.</span></p></div>
+        <button class="release-selection" id="release-selection" type="button" hidden>Release selection <span aria-hidden="true">↗</span></button>
+      </aside>
+      <p class="screen-reader-only" id="selection-status" role="status" aria-live="polite" aria-atomic="true"></p>
+    </main>
+
+    <footer class="colophon">
+      <span>A pencil atlas of London</span>
+      <a class="source-link" href="https://github.com/Nikihu-a/london-pencil-atlas" target="_blank" rel="noopener noreferrer">Open source <span aria-hidden="true">↗</span></a>
+      <span class="footer-note">Made for a little wandering.</span>
+    </footer>
+  </div>
+  <noscript><p class="noscript-note">This illustrated atlas works best with JavaScript enabled. Its six landmarks are Big Ben, Tower Bridge, British Museum, Buckingham Palace, London Eye and Westminster Abbey.</p></noscript>
+</body>
+</html>

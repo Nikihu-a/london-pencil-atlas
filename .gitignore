@@ -1,0 +1,5 @@
+.DS_Store
+node_modules/
+artifacts/
+*.zip
+assets/illustrations/asset-manifest.json
