@@ -9,8 +9,10 @@ An interactive, single-page pencil atlas of London. Six landmarks sit on an illu
 - Hover a landmark to enlarge it by 15% and reveal its colour.
 - Click a building to open its illustrated story in a modal on the same page. Close the story or press **Escape** to return to the map.
 - Choose **Read the story** to open the currently previewed landmark.
+- Use **Previous** and **Next** in the story to wander through all six landmarks without leaving the page.
 - On a phone or tablet, tap a building to open its story.
 - Choose **Music · Play** for a gentle folk instrumental, **Thatched Villagers** by Kevin MacLeod. Choose **Music · Pause** to stop. Music begins only after this explicit action, loops at a quiet volume and pauses when the tab is hidden.
+- Use the upper-right **Day / Golden Hour** sun button to change the light. Golden Hour adds a softly fading warm sky, subtle building side light and shadows, and slow gold reflections on the Thames while keeping the ivory paper. The choice is remembered when browser storage is available.
 - Use **Tab** to reach buildings, arrow keys to move between them, **Enter** or **Space** to select, and **Escape** to close a story or release a selection.
 - Reduced-motion preferences are respected.
 
@@ -50,7 +52,7 @@ All asset paths are relative, so the site works under a project repository path.
 ```text
 index.html                    Semantic page and six landmark controls
 styles.css                    Layout, art direction, motion and responsive styles
-app.js                        Map interaction, landmark stories and music playback
+app.js                        Map interaction, stories, lighting and music playback
 assets/favicon.svg            Site-specific clock-tower favicon
 assets/illustrations/         Pencil backdrop and transparent coloured landmarks
 assets/fonts/                 Locally hosted fonts and their OFL licences

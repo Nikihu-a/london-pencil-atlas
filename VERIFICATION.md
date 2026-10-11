@@ -8,6 +8,10 @@ Checked on 11 October 2026.
 - Six independent transparent landmark illustrations, local fonts and their OFL licence files are bundled. Interface text is English.
 - In a real Tabbit browser, all six building clicks opened the corresponding illustrated story, with the correct title, image and original descriptions. Escape closed each story.
 - The desktop detail layout and the Big Ben illustration were inspected visually.
+- The homepage Day / Golden Hour control was tested in the real browser in both directions. Refresh restored the saved lighting choice.
+- Desktop and narrow-screen screenshots were inspected for the warm sky, subtle building lighting and softened map boundaries. Paper and text colours stay unchanged in both modes.
+- The header was checked again at 390 px and 320 px after adding the lighting control; the 320 px button spacing was corrected and visually rechecked.
+- Previous and Next story controls were tested, including the wrap from Big Ben to Westminster Abbey and back. Changing stories moves keyboard focus to the new heading and resets the dialog scroll position. Next was also checked at 320 px.
 - Browser device emulation at 390 px and 320 px was used to inspect the header, music button, title, map and story layout.
 - A landmark story was opened, scrolled and closed at the mobile viewport. The close button stays available while scrolling.
 - The music button started real browser audio playback and changed to Pause; pausing stopped playback and restored Play. Initial load was silent.

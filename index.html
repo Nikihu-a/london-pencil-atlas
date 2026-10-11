@@ -10,8 +10,8 @@
   <meta property="og:type" content="website">
   <title>London — A City in Sketches</title>
   <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
-  <link rel="stylesheet" href="./styles.css?v=20261011-notes1">
-  <script src="./app.js?v=20261011-notes1" defer></script>
+  <link rel="stylesheet" href="./styles.css?v=20261011-golden1">
+  <script src="./app.js?v=20261011-golden1" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#landmarks">Skip to the landmarks</a>
@@ -20,10 +20,19 @@
       <a class="wordmark" href="#top" aria-label="London, back to the beginning">London</a>
       <span class="edition">A city in sketches</span>
       <p class="header-hint"><span class="hint-dot" aria-hidden="true"></span><span class="desktop-copy">Hover to explore</span><span class="touch-copy">Tap to explore</span></p>
-      <button class="music-toggle" id="music-toggle" type="button" aria-label="Play background music" aria-pressed="false" aria-describedby="music-status">
-        <span class="music-icon" aria-hidden="true"><span></span><span></span><span></span></span>
-        <span id="music-label">Music · Play</span>
-      </button>
+      <div class="header-actions">
+        <button class="music-toggle" id="music-toggle" type="button" aria-label="Play background music" aria-pressed="false" aria-describedby="music-status">
+          <span class="music-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span id="music-label">Music · Play</span>
+        </button>
+        <button class="light-toggle" id="light-toggle" type="button" aria-label="Switch to golden hour" aria-pressed="false" aria-describedby="light-status" title="Let the sun set over London">
+          <span class="light-icon" aria-hidden="true">
+            <svg class="day-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
+            <svg class="sunset-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M7 15a5 5 0 0 1 10 0M3 15h18M5 19h14M12 3v3M4 7l2 2m12 0 2-2"/></svg>
+          </span>
+          <span id="light-label">Day</span>
+        </button>
+      </div>
     </header>
 
     <main class="atlas" id="top">
@@ -35,6 +44,19 @@
       <section class="map" id="landmarks" aria-label="An illustrated map of six London landmarks" aria-describedby="map-instructions">
         <div class="map-canvas">
           <img class="map-backdrop" src="./assets/illustrations/backdrop.png" width="1536" height="1024" alt="" fetchpriority="high" draggable="false">
+          <div class="map-atmosphere" aria-hidden="true">
+            <img class="evening-backdrop" src="./assets/illustrations/backdrop.png" width="1536" height="1024" alt="" draggable="false">
+            <div class="evening-sky"></div>
+            <span class="evening-sun"></span>
+            <svg class="river-light" viewBox="0 0 1536 1024" preserveAspectRatio="none" fill="none">
+              <defs>
+                <linearGradient id="golden-glint"><stop stop-color="#f2dbab" stop-opacity="0"/><stop offset=".5" stop-color="#e0ae5d"/><stop offset="1" stop-color="#f2dbab" stop-opacity="0"/></linearGradient>
+              </defs>
+              <g class="river-glints" stroke="url(#golden-glint)" stroke-width="3" stroke-linecap="round">
+                <path d="M998 278h59m-9 12h56m-20 26h54m-12 16h51M1286 398h55m-10 16h66M1306 697h63m-91 12h81m-21 18h53M1200 749h82m-95 13h52M829 836h70m-118 21h55"/>
+              </g>
+            </svg>
+          </div>
 
           <button class="landmark landmark--museum" type="button" data-landmark="british-museum" aria-label="Explore British Museum" aria-pressed="false">
             <img class="landmark-art" src="./assets/illustrations/british-museum.png" width="1774" height="887" alt="" draggable="false">
@@ -90,13 +112,14 @@
   </div>
   <audio id="background-music" src="./assets/audio/thatched-villagers.mp3" preload="none" loop></audio>
   <p class="screen-reader-only" id="music-status" role="status" aria-live="polite">Background music is paused. Choose Play to listen.</p>
+  <p class="screen-reader-only" id="light-status" role="status" aria-live="polite">Daylight on the London atlas.</p>
   <dialog class="landmark-detail" id="landmark-detail" aria-labelledby="detail-title" aria-describedby="detail-tagline">
     <div class="detail-header"><span>Notes from London <span id="detail-number">01 / 06</span></span><button id="close-detail" class="detail-close" type="button" aria-label="Close landmark story" autofocus>Close <span aria-hidden="true">×</span></button></div>
     <div class="detail-layout">
       <figure class="detail-figure"><img id="detail-art" alt="" width="1024" height="1024"><figcaption>A city, drawn slowly.</figcaption></figure>
       <article class="detail-copy">
         <p class="detail-category" id="detail-category"></p>
-        <h2 id="detail-title"></h2>
+        <h2 id="detail-title" tabindex="-1"></h2>
         <p class="detail-tagline" id="detail-tagline"></p>
         <dl class="detail-facts"><div><dt>Find it in</dt><dd id="detail-location"></dd></div><div><dt>At a glance</dt><dd id="detail-date"></dd></div></dl>
         <h3>The story</h3><p id="detail-history"></p>
@@ -104,6 +127,11 @@
         <p class="detail-note" id="detail-note"></p>
       </article>
     </div>
+    <nav class="detail-navigation" aria-label="More landmark stories">
+      <button id="previous-landmark" type="button"><span>← Previous</span><strong id="previous-name"></strong></button>
+      <span class="detail-navigation-note">Keep wandering.</span>
+      <button id="next-landmark" type="button"><span>Next →</span><strong id="next-name"></strong></button>
+    </nav>
   </dialog>
   <noscript><p class="noscript-note">This illustrated atlas works best with JavaScript enabled. Its six landmarks are Big Ben, Tower Bridge, British Museum, Buckingham Palace, London Eye and Westminster Abbey.</p></noscript>
 </body>

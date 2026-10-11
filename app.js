@@ -71,6 +71,18 @@ const landmarkNotes = {
 };
 
 const buttons = [...document.querySelectorAll('[data-landmark]')];
+// Reuse the transparent artwork for decorative side light and ground shadows.
+for (const button of buttons) {
+  const artwork = button.querySelector('.landmark-art');
+  const shadow = artwork.cloneNode(false);
+  shadow.className = 'landmark-shadow';
+  shadow.setAttribute('aria-hidden', 'true');
+  const sideLight = artwork.cloneNode(false);
+  sideLight.className = 'landmark-light';
+  sideLight.setAttribute('aria-hidden', 'true');
+  button.prepend(shadow);
+  button.insertBefore(sideLight, button.querySelector('.map-label'));
+}
 const story = document.querySelector('#story-content');
 const releaseButton = document.querySelector('#release-selection');
 const status = document.querySelector('#selection-status');
@@ -90,6 +102,9 @@ let storyTimer;
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const detail = document.querySelector('#landmark-detail');
 const detailFields = Object.fromEntries(['number', 'category', 'title', 'tagline', 'location', 'date', 'history', 'look', 'note'].map(key => [key, document.querySelector(`#detail-${key}`)]));
+const landmarkOrder = Object.keys(landmarks);
+const previousLandmark = document.querySelector('#previous-landmark');
+const nextLandmark = document.querySelector('#next-landmark');
 
 for (const button of buttons) {
   button.setAttribute('aria-haspopup', 'dialog');
@@ -100,6 +115,7 @@ function openDetail(id) {
   const landmark = landmarks[id];
   const notes = landmarkNotes[id];
   if (!landmark || !notes) return;
+  const wasOpen = detail.open;
   pinned = id;
   hovered = null;
   focused = null;
@@ -110,9 +126,17 @@ function openDetail(id) {
   const art = document.querySelector('#detail-art');
   art.src = `./assets/illustrations/${id}.png`;
   art.alt = `A coloured-pencil illustration of ${landmark.name}`;
+  const index = landmarkOrder.indexOf(id);
+  previousLandmark.dataset.target = landmarkOrder[(index + landmarkOrder.length - 1) % landmarkOrder.length];
+  nextLandmark.dataset.target = landmarkOrder[(index + 1) % landmarkOrder.length];
+  document.querySelector('#previous-name').textContent = landmarks[previousLandmark.dataset.target].name;
+  document.querySelector('#next-name').textContent = landmarks[nextLandmark.dataset.target].name;
+  previousLandmark.setAttribute('aria-label', `Previous landmark: ${landmarks[previousLandmark.dataset.target].name}`);
+  nextLandmark.setAttribute('aria-label', `Next landmark: ${landmarks[nextLandmark.dataset.target].name}`);
   if (!detail.open) detail.showModal();
   document.body.classList.add('detail-is-open');
   detail.scrollTop = 0;
+  if (wasOpen) detailFields.title.focus({preventScroll: true});
   status.textContent = `${landmark.name} story opened. Close the story to return to the map.`;
 }
 
@@ -127,6 +151,8 @@ detail.addEventListener('click', event => {
   if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) detail.close();
 });
 document.querySelector('#read-story').addEventListener('click', () => openDetail(displayed));
+previousLandmark.addEventListener('click', () => openDetail(previousLandmark.dataset.target));
+nextLandmark.addEventListener('click', () => openDetail(nextLandmark.dataset.target));
 
 function updateStory(id) {
   clearTimeout(storyTimer);
@@ -217,6 +243,29 @@ releaseButton.addEventListener('click', () => {
 document.addEventListener('keydown', event => {
   if (event.key === 'Escape' && !detail.open) releaseSelection();
 });
+
+const lightButton = document.querySelector('#light-toggle');
+const lightLabel = document.querySelector('#light-label');
+const lightStatus = document.querySelector('#light-status');
+let light = 'day';
+try {
+  if (localStorage.getItem('london-atlas-light') === 'sunset') light = 'sunset';
+} catch (error) { /* The switch also works when browser storage is unavailable. */ }
+
+function renderLight() {
+  document.documentElement.dataset.light = light;
+  lightButton.setAttribute('aria-pressed', String(light === 'sunset'));
+  lightButton.setAttribute('aria-label', light === 'sunset' ? 'Switch to daylight' : 'Switch to golden hour');
+  lightButton.title = light === 'sunset' ? 'Bring back the morning light' : 'Let the sun set over London';
+  lightLabel.textContent = light === 'sunset' ? 'Golden Hour' : 'Day';
+  lightStatus.textContent = light === 'sunset' ? 'Golden hour: warm skies, soft building shadows and golden reflections on the Thames.' : 'Daylight on the London atlas.';
+}
+lightButton.addEventListener('click', () => {
+  light = light === 'day' ? 'sunset' : 'day';
+  renderLight();
+  try { localStorage.setItem('london-atlas-light', light); } catch (error) { /* Keep the current session’s choice. */ }
+});
+renderLight();
 
 const music = document.querySelector('#background-music');
 const musicButton = document.querySelector('#music-toggle');
