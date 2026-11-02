@@ -1,19 +1,8 @@
 # London — A City in Sketches
 
-An interactive pencil atlas of London. Explore six landmarks on an illustrated map, reveal their colour and open their stories without leaving the page.
+An interactive, single-page pencil atlas of London. Six landmarks sit on an illustrated city map: move over a building and its graphite drawing gently grows into a coloured-pencil illustration. The introduction changes in place, without opening another page.
 
-[Visit the live atlas](https://nikihu-a.github.io/london-pencil-atlas/) · [Verification notes](VERIFICATION.md)
-
-[![London — A City in Sketches — live website screenshot](docs/preview.jpg)](https://nikihu-a.github.io/london-pencil-atlas/)
-
-## Project in brief
-
-- **Audience & goal:** a visual introduction for people curious about London, connecting six landmarks with short stories and a sense of place.
-- **My role & AI collaboration:** a Niki project developed through AI-assisted design and implementation. The illustrations were generated with ImageGen; their prompts are included in the repository.
-- **Key decisions:** keep map exploration and stories on one page; offer touch and keyboard controls; make music optional; use an artistic map without a navigation API.
-- **Validation:** the existing [verification record](VERIFICATION.md) covers all six stories, navigation, lighting, audio controls and narrow-screen layouts. Mobile checks used browser emulation.
-
-一个围绕六座伦敦地标展开的插画地图实验，结合 Niki 的项目方向与 AI 协作制作，探索地图、故事和光线如何组成一页体验。
+[Visit the live atlas](https://nikihu-a.github.io/london-pencil-atlas/) · [GitHub repository](https://github.com/Nikihu-a/london-pencil-atlas)
 
 ## Explore
 
